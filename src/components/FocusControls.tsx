@@ -28,7 +28,7 @@ export function FocusControls({
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.6 }}
-      className="glass-panel p-6 w-full max-w-sm space-y-6"
+      className="glass-panel p-4 w-full max-w-xs space-y-4"
     >
       {/* Focus Badge */}
       <div className="flex justify-center">
@@ -43,7 +43,7 @@ export function FocusControls({
       </div>
 
       {/* Timer */}
-      <div className="text-center py-4">
+      <div className="text-center py-2">
         <FocusTimer seconds={currentSessionSeconds} />
       </div>
 
