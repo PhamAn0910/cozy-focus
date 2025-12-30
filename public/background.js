@@ -1,0 +1,85 @@
+// CozyFocus Background Service Worker
+// Handles website blocking using declarativeNetRequest
+
+const RULE_ID_START = 1;
+
+// Listen for messages from the new tab page
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === 'UPDATE_BLOCKLIST') {
+    updateBlockingRules(message.domains);
+    sendResponse({ success: true });
+  } else if (message.type === 'CLEAR_BLOCKLIST') {
+    clearBlockingRules();
+    sendResponse({ success: true });
+  } else if (message.type === 'GET_FOCUS_STATE') {
+    chrome.storage.local.get(['isLocked', 'blockedDomains', 'totalFocusSeconds'], (result) => {
+      sendResponse(result);
+    });
+    return true; // Keep channel open for async response
+  }
+});
+
+async function updateBlockingRules(domains) {
+  if (!domains || domains.length === 0) {
+    await clearBlockingRules();
+    return;
+  }
+
+  // Remove existing rules first
+  const existingRules = await chrome.declarativeNetRequest.getDynamicRules();
+  const existingRuleIds = existingRules.map(rule => rule.id);
+  
+  if (existingRuleIds.length > 0) {
+    await chrome.declarativeNetRequest.updateDynamicRules({
+      removeRuleIds: existingRuleIds
+    });
+  }
+
+  // Create new rules
+  const rules = domains.map((domain, index) => ({
+    id: RULE_ID_START + index,
+    priority: 1,
+    action: {
+      type: 'redirect',
+      redirect: {
+        extensionPath: '/blocked.html'
+      }
+    },
+    condition: {
+      urlFilter: `||${domain}`,
+      resourceTypes: ['main_frame']
+    }
+  }));
+
+  await chrome.declarativeNetRequest.updateDynamicRules({
+    addRules: rules
+  });
+
+  // Store the blocked domains
+  await chrome.storage.local.set({ 
+    blockedDomains: domains,
+    isLocked: true 
+  });
+}
+
+async function clearBlockingRules() {
+  const existingRules = await chrome.declarativeNetRequest.getDynamicRules();
+  const existingRuleIds = existingRules.map(rule => rule.id);
+  
+  if (existingRuleIds.length > 0) {
+    await chrome.declarativeNetRequest.updateDynamicRules({
+      removeRuleIds: existingRuleIds
+    });
+  }
+
+  await chrome.storage.local.set({ isLocked: false });
+}
+
+// Initialize on install
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.storage.local.set({
+    isLocked: false,
+    blockedDomains: ['twitter.com', 'reddit.com', 'youtube.com'],
+    totalFocusSeconds: 0
+  });
+});

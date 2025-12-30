@@ -1,73 +1,91 @@
-# Welcome to your Lovable project
+# CozyFocus - Lo-Fi Study Dashboard Chrome Extension
 
-## Project info
+A cozy Chrome Extension that replaces your New Tab page with a beautiful lo-fi study dashboard. It helps you stay focused by blocking distracting websites and tracking your focus hours.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+![CozyFocus Dashboard](src/assets/study-girl.png)
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- 🎨 **Beautiful Lo-Fi Aesthetic** - Warm, cozy design with glassmorphism panels
+- ⏱️ **Focus Timer** - Tracks your focus session in real-time
+- 🚫 **Website Blocker** - Block distracting sites with declarativeNetRequest
+- 🔐 **Shame Phrase Unlock** - Forces you to type a phrase to quit early
+- 🎵 **Ambient Audio Player** - Rain sounds to help you concentrate
+- 📊 **Focus Statistics** - Track total focus hours over time
 
-**Use Lovable**
+## Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- Framer Motion
+- Chrome Extension Manifest V3
 
-Changes made via Lovable will be committed automatically to this repo.
+## Installation (Development)
 
-**Use your preferred IDE**
+1. Clone this repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Build the extension:
+   ```bash
+   npm run build
+   ```
+4. Load the extension in Chrome:
+   - Open `chrome://extensions/`
+   - Enable "Developer mode"
+   - Click "Load unpacked"
+   - Select the `dist` folder
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Project Structure
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+├── public/
+│   ├── manifest.json      # Chrome extension manifest
+│   ├── background.js      # Service worker for blocking
+│   ├── blocked.html       # Page shown when accessing blocked sites
+│   └── icons/             # Extension icons (add your own)
+├── src/
+│   ├── components/        # React components
+│   ├── hooks/             # Custom hooks
+│   ├── pages/             # Page components
+│   └── assets/            # Images and static files
+├── privacy-policy.md      # Required for Chrome Web Store
+└── README.md
 ```
 
-**Edit a file directly in GitHub**
+## Building for Chrome Web Store
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. Build the production version:
+   ```bash
+   npm run build
+   ```
 
-**Use GitHub Codespaces**
+2. Create a ZIP file of the `dist` folder:
+   ```bash
+   cd dist && zip -r ../cozy-focus.zip .
+   ```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+3. Upload `cozy-focus.zip` to the [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole/)
 
-## What technologies are used for this project?
+## Required Icons
 
-This project is built with:
+Add these icon sizes to `public/icons/`:
+- `icon16.png` (16x16)
+- `icon48.png` (48x48)
+- `icon128.png` (128x128)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Permissions Explained
 
-## How can I deploy this project?
+- `storage` - Save blocklist and focus statistics locally
+- `declarativeNetRequest` - Block websites using Chrome's efficient blocking API
+- `<all_urls>` - Required to intercept and redirect blocked sites
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## Privacy
 
-## Can I connect a custom domain to my Lovable project?
+CozyFocus stores all data locally on your device. No browsing history or personal information is sent to external servers. See [privacy-policy.md](./privacy-policy.md) for details.
 
-Yes, you can!
+## License
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+MIT

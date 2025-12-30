@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CozyFocus - Stay Focused</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #F5F5F0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .blob-1 {
+      width: 400px;
+      height: 400px;
+      background: #E3CFA3;
+      top: -10%;
+      left: -10%;
+    }
+
+    .blob-2 {
+      width: 500px;
+      height: 500px;
+      background: #d4c4a8;
+      bottom: -10%;
+      right: -10%;
+      animation-delay: 2s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .container {
+      text-align: center;
+      z-index: 10;
+      max-width: 600px;
+      padding: 2rem;
+    }
+
+    .icon-wrapper {
+      width: 80px;
+      height: 80px;
+      background: #E3CFA3;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+    }
+
+    .icon-wrapper svg {
+      width: 36px;
+      height: 36px;
+      color: #8D6E63;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 400;
+      color: #3d3d3d;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .subtitle {
+      color: #6b6b6b;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background: transparent;
+      border: 2px solid #8D6E63;
+      color: #8D6E63;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #8D6E63;
+      color: #F5F5F0;
+    }
+
+    .divider {
+      width: 60%;
+      height: 1px;
+      background: #d4c4a8;
+      margin: 2.5rem auto;
+    }
+
+    .quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #8b8b8b;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .quote-author {
+      color: #8D6E63;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  
+  <div class="container">
+    <div class="icon-wrapper">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+      </svg>
+    </div>
+    
+    <h1>Don't give up on your dreams for a quick dopamine hit.</h1>
+    
+    <p class="subtitle">
+      This site is currently blocked to help you stay in the flow. Take a deep breath and return to your goals.
+    </p>
+    
+    <button class="btn" onclick="goBack()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Return to Focus
+    </button>
+    
+    <div class="divider"></div>
+    
+    <p class="quote">"Discipline is choosing between what you want now and what you want most."</p>
+    <p class="quote-author">— Abraham Lincoln</p>
+  </div>
+
+  <script>
+    function goBack() {
+      // Navigate to new tab (extension's index.html)
+      window.location.href = chrome.runtime.getURL('index.html');
+    }
+
+    // Randomize quotes
+    const quotes = [
+      { text: "Discipline is choosing between what you want now and what you want most.", author: "Abraham Lincoln" },
+      { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+      { text: "Focus on being productive instead of busy.", author: "Tim Ferriss" },
+      { text: "Your future self will thank you.", author: "Unknown" },
+      { text: "Small daily improvements lead to stunning results.", author: "Robin Sharma" }
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.querySelector('.quote').textContent = `"${randomQuote.text}"`;
+    document.querySelector('.quote-author').textContent = `— ${randomQuote.author}`;
+  </script>
+</body>
+</html>
