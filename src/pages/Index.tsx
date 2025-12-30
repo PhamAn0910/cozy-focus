@@ -45,7 +45,7 @@ const Index = () => {
         />
       </div>
 
-      {/* Study Girl Background Image */}
+      {/* Background Image */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -55,9 +55,8 @@ const Index = () => {
         <img
           src={studyGirl}
           alt="Cozy study scene"
-          className="w-full h-full object-cover object-center opacity-50"
+          className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-background/30 to-background/70" />
       </motion.div>
 
       {/* Main Content */}
