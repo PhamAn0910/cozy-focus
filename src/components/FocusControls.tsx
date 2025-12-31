@@ -1,27 +1,54 @@
 import { motion } from 'framer-motion';
-import { Lock, Unlock } from 'lucide-react';
+import { Lock, Unlock, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Slider } from '@/components/ui/slider';
 import { FocusTimer } from './FocusTimer';
 import { Blocklist } from './Blocklist';
 
 interface FocusControlsProps {
   isLocked: boolean;
   currentSessionSeconds: number;
+  remainingSeconds: number;
   blockedDomains: string[];
+  sessionDurationMinutes: number;
   onAddDomain: (domain: string) => void;
   onRemoveDomain: (domain: string) => void;
   onLockIn: () => void;
   onStopSession: () => void;
+  onSetDuration: (minutes: number) => void;
 }
+
+const formatDuration = (minutes: number) => {
+  if (minutes >= 60) {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
+  }
+  return `${minutes}m`;
+};
+
+const formatRemainingTime = (seconds: number) => {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  
+  if (hours > 0) {
+    return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+  return `${minutes}:${secs.toString().padStart(2, '0')}`;
+};
 
 export function FocusControls({
   isLocked,
   currentSessionSeconds,
+  remainingSeconds,
   blockedDomains,
+  sessionDurationMinutes,
   onAddDomain,
   onRemoveDomain,
   onLockIn,
   onStopSession,
+  onSetDuration,
 }: FocusControlsProps) {
   return (
     <motion.div
@@ -45,7 +72,49 @@ export function FocusControls({
       {/* Timer */}
       <div className="text-center py-2">
         <FocusTimer seconds={currentSessionSeconds} />
+        {isLocked && remainingSeconds > 0 && (
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-sm text-muted-foreground mt-2"
+          >
+            {formatRemainingTime(remainingSeconds)} remaining
+          </motion.p>
+        )}
       </div>
+
+      {/* Duration Selector (only when not locked) */}
+      {!isLocked && (
+        <motion.div 
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          className="space-y-2"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-muted-foreground" />
+              <span className="text-sm text-muted-foreground">Session Duration</span>
+            </div>
+            <span className="text-sm font-semibold text-foreground">
+              {formatDuration(sessionDurationMinutes)}
+            </span>
+          </div>
+          <Slider
+            value={[sessionDurationMinutes]}
+            onValueChange={(v) => onSetDuration(v[0])}
+            min={5}
+            max={180}
+            step={5}
+            className="w-full"
+          />
+          <div className="flex justify-between text-xs text-muted-foreground">
+            <span>5m</span>
+            <span>1h</span>
+            <span>2h</span>
+            <span>3h</span>
+          </div>
+        </motion.div>
+      )}
 
       {/* Blocklist */}
       <Blocklist

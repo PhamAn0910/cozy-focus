@@ -12,8 +12,11 @@ const Index = () => {
     isLocked,
     blockedDomains,
     currentSessionSeconds,
+    remainingSeconds,
+    sessionDurationMinutes,
     addDomain,
     removeDomain,
+    setSessionDuration,
     lockIn,
     unlock,
   } = useFocusState();
@@ -28,6 +31,9 @@ const Index = () => {
     unlock();
     setShowStopModal(false);
   };
+
+  // Calculate remaining minutes for the modal
+  const remainingMinutes = Math.ceil(remainingSeconds / 60);
 
   return (
     <main className="min-h-screen w-full relative overflow-hidden bg-background">
@@ -66,11 +72,14 @@ const Index = () => {
           <FocusControls
             isLocked={isLocked}
             currentSessionSeconds={currentSessionSeconds}
+            remainingSeconds={remainingSeconds}
             blockedDomains={blockedDomains}
+            sessionDurationMinutes={sessionDurationMinutes}
             onAddDomain={addDomain}
             onRemoveDomain={removeDomain}
             onLockIn={lockIn}
             onStopSession={handleStopSession}
+            onSetDuration={setSessionDuration}
           />
 
           <AudioPlayer />
@@ -90,7 +99,7 @@ const Index = () => {
         isOpen={showStopModal}
         onClose={() => setShowStopModal(false)}
         onConfirmStop={handleConfirmStop}
-        sessionMinutes={Math.max(0, Math.ceil((30 * 60 - currentSessionSeconds) / 60))}
+        remainingMinutes={remainingMinutes}
       />
     </main>
   );

@@ -3,6 +3,28 @@
 
 const RULE_ID_START = 1;
 
+// Listen for alarm (session end - auto-unlock)
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === 'sessionEnd') {
+    // Auto-unlock: remove all blocking rules
+    clearBlockingRules();
+    
+    // Update storage to reflect unlocked state
+    chrome.storage.local.get(['totalFocusSeconds', 'sessionStartTime'], (result) => {
+      const sessionDuration = result.sessionStartTime 
+        ? Math.floor((Date.now() - result.sessionStartTime) / 1000)
+        : 0;
+      
+      chrome.storage.local.set({
+        isLocked: false,
+        sessionStartTime: null,
+        sessionEndTime: null,
+        totalFocusSeconds: (result.totalFocusSeconds || 0) + sessionDuration,
+      });
+    });
+  }
+});
+
 // Listen for messages from the new tab page
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'UPDATE_BLOCKLIST') {

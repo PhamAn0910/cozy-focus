@@ -7,12 +7,12 @@ interface StopChallengeModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirmStop: () => void;
-  sessionMinutes: number;
+  remainingMinutes: number;
 }
 
 const SHAME_PHRASE = "I am choosing distraction over my goals";
 
-export function StopChallengeModal({ isOpen, onClose, onConfirmStop, sessionMinutes }: StopChallengeModalProps) {
+export function StopChallengeModal({ isOpen, onClose, onConfirmStop, remainingMinutes }: StopChallengeModalProps) {
   const [inputValue, setInputValue] = useState('');
   const isMatch = inputValue.toLowerCase() === SHAME_PHRASE.toLowerCase();
 
@@ -97,9 +97,11 @@ export function StopChallengeModal({ isOpen, onClose, onConfirmStop, sessionMinu
               </div>
 
               {/* Session info */}
-              <p className="text-center text-sm text-muted-foreground">
-                Session ends in {sessionMinutes} minutes.
-              </p>
+              {remainingMinutes > 0 && (
+                <p className="text-center text-sm text-muted-foreground">
+                  Session ends in {remainingMinutes} minute{remainingMinutes !== 1 ? 's' : ''}.
+                </p>
+              )}
             </div>
           </motion.div>
         </>
