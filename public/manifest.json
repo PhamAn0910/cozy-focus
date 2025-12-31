@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "CozyFocus",
+  "name": "CozyFocus - Cozy Study Dashboard",
   "version": "1.0.0",
-  "description": "A cozy lo-fi study dashboard that helps you stay focused by blocking distracting websites.",
+  "description": "A cozy lo-fi study dashboard that helps you stay focused by blocking distracting websites. Transform your new tab into a peaceful focus zone.",
   "permissions": [
     "storage",
     "declarativeNetRequest",
@@ -18,7 +18,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["blocked.html", "assets/*"],
+      "resources": ["blocked.html", "assets/*", "icons/*"],
       "matches": ["<all_urls>"]
     }
   ],
@@ -33,6 +33,6 @@
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
     },
-    "default_title": "CozyFocus"
+    "default_title": "CozyFocus - Stay Focused"
   }
 }
