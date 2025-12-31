@@ -19,6 +19,7 @@ export default defineConfig(({ mode }) => ({
         { src: "public/manifest.json", dest: "." },
         { src: "public/background.js", dest: "." },
         { src: "public/blocked.html", dest: "." },
+        { src: "public/blocked.js", dest: "." },
         { src: "public/icons", dest: "." },
       ],
     }),

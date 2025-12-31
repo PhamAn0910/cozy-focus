@@ -155,7 +155,7 @@
       This site is currently blocked to help you stay in the flow. Take a deep breath and return to your goals.
     </p>
     
-    <button class="btn" onclick="goBack()">
+    <button class="btn">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
       </svg>
@@ -168,24 +168,6 @@
     <p class="quote-author">— Abraham Lincoln</p>
   </div>
 
-  <script>
-    function goBack() {
-      // Navigate to new tab (extension's index.html)
-      window.location.href = chrome.runtime.getURL('index.html');
-    }
-
-    // Randomize quotes
-    const quotes = [
-      { text: "Discipline is choosing between what you want now and what you want most.", author: "Abraham Lincoln" },
-      { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
-      { text: "Focus on being productive instead of busy.", author: "Tim Ferriss" },
-      { text: "Your future self will thank you.", author: "Unknown" },
-      { text: "Small daily improvements lead to stunning results.", author: "Robin Sharma" }
-    ];
-
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    document.querySelector('.quote').textContent = `"${randomQuote.text}"`;
-    document.querySelector('.quote-author').textContent = `— ${randomQuote.author}`;
-  </script>
+  <script src="blocked.js"></script>
 </body>
 </html>
