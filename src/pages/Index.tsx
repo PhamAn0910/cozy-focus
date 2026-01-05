@@ -5,7 +5,7 @@ import { FocusControls } from '@/components/FocusControls';
 import { AudioPlayer } from '@/components/AudioPlayer';
 import { StopChallengeModal } from '@/components/StopChallengeModal';
 import { Logo } from '@/components/Logo';
-import studyGirl from '@/assets/study-girl.png';
+import studyVideo from '@/assets/looping-study-girl.webm';
 
 const Index = () => {
   const {
@@ -51,18 +51,22 @@ const Index = () => {
         />
       </div>
 
-      {/* Background Image */}
+      {/* Background Video */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
         className="absolute inset-0 z-0"
       >
-        <img
-          src={studyGirl}
-          alt="Cozy study scene"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
           className="w-full h-full object-cover object-center"
-        />
+        >
+          <source src={studyVideo} type="video/webm" />
+        </video>
       </motion.div>
 
       {/* Main Content */}
