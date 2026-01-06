@@ -131,7 +131,7 @@ export function FocusControls({
       />
 
       {/* Action Button */}
-      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+      <motion.div whileHover={{ scale: enabledDomains.length > 0 ? 1.02 : 1 }} whileTap={{ scale: enabledDomains.length > 0 ? 0.98 : 1 }}>
         {isLocked ? (
           <Button
             onClick={onStopSession}
@@ -144,7 +144,8 @@ export function FocusControls({
         ) : (
           <Button
             onClick={onLockIn}
-            className="w-full py-6 text-base bg-secondary hover:bg-secondary/90 text-secondary-foreground"
+            disabled={enabledDomains.length === 0}
+            className="w-full py-6 text-base bg-secondary hover:bg-secondary/90 text-secondary-foreground disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Lock className="w-4 h-4 mr-2" />
             Lock In
