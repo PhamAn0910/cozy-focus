@@ -5,34 +5,22 @@ import { Checkbox } from '@/components/ui/checkbox';
 
 interface BlocklistProps {
   domains: string[];
+  enabledDomains: string[];
   onAddDomain: (domain: string) => void;
   onRemoveDomain: (domain: string) => void;
+  onToggleDomain: (domain: string) => void;
   isLocked: boolean;
 }
 
-export function Blocklist({ domains, onAddDomain, onRemoveDomain, isLocked }: BlocklistProps) {
+export function Blocklist({ domains, enabledDomains, onAddDomain, onRemoveDomain, onToggleDomain, isLocked }: BlocklistProps) {
   const [newDomain, setNewDomain] = useState('');
-  const [enabledDomains, setEnabledDomains] = useState<Set<string>>(new Set(domains));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newDomain.trim()) {
       onAddDomain(newDomain.trim());
       setNewDomain('');
-      setEnabledDomains(prev => new Set([...prev, newDomain.trim().toLowerCase()]));
     }
-  };
-
-  const toggleDomain = (domain: string) => {
-    setEnabledDomains(prev => {
-      const next = new Set(prev);
-      if (next.has(domain)) {
-        next.delete(domain);
-      } else {
-        next.add(domain);
-      }
-      return next;
-    });
   };
 
   return (
@@ -63,8 +51,8 @@ export function Blocklist({ domains, onAddDomain, onRemoveDomain, isLocked }: Bl
               className="flex items-center gap-3 py-2 group"
             >
               <Checkbox
-                checked={enabledDomains.has(domain)}
-                onCheckedChange={() => toggleDomain(domain)}
+                checked={enabledDomains.includes(domain)}
+                onCheckedChange={() => onToggleDomain(domain)}
                 disabled={isLocked}
                 className="border-secondary data-[state=checked]:bg-secondary data-[state=checked]:border-secondary"
               />

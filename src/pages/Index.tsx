@@ -12,11 +12,13 @@ const Index = () => {
   const {
     isLocked,
     blockedDomains,
+    enabledDomains,
     currentSessionSeconds,
     remainingSeconds,
     sessionDurationMinutes,
     addDomain,
     removeDomain,
+    toggleDomain,
     setSessionDuration,
     lockIn,
     unlock,
@@ -84,9 +86,11 @@ const Index = () => {
           currentSessionSeconds={currentSessionSeconds}
           remainingSeconds={remainingSeconds}
           blockedDomains={blockedDomains}
+          enabledDomains={enabledDomains}
           sessionDurationMinutes={sessionDurationMinutes}
           onAddDomain={addDomain}
           onRemoveDomain={removeDomain}
+          onToggleDomain={toggleDomain}
           onLockIn={lockIn}
           onStopSession={handleStopSession}
           onSetDuration={setSessionDuration}

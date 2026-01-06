@@ -3,13 +3,14 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 export interface FocusState {
   isLocked: boolean;
   blockedDomains: string[];
+  enabledDomains: string[]; // Domains that are checked/enabled for blocking
   totalFocusSeconds: number;
   sessionStartTime: number | null;
   sessionDurationMinutes: number;
   sessionEndTime: number | null;
 }
 
-const DEFAULT_DOMAINS = ['twitter.com', 'reddit.com', 'youtube.com'];
+const DEFAULT_DOMAINS = ['facebook.com', 'reddit.com', 'youtube.com'];
 const DEFAULT_DURATION_MINUTES = 30;
 
 // Safely check if we're running as a Chrome extension
@@ -41,6 +42,7 @@ export function useFocusState() {
   const [state, setState] = useState<FocusState>({
     isLocked: false,
     blockedDomains: DEFAULT_DOMAINS,
+    enabledDomains: ['twitter.com', 'reddit.com'], // Only first two enabled by default
     totalFocusSeconds: 0,
     sessionStartTime: null,
     sessionDurationMinutes: DEFAULT_DURATION_MINUTES,
@@ -56,11 +58,13 @@ export function useFocusState() {
     
     if (chromeAPI) {
       chromeAPI.storage.local.get(
-        ['isLocked', 'blockedDomains', 'totalFocusSeconds', 'sessionStartTime', 'sessionDurationMinutes', 'sessionEndTime'],
+        ['isLocked', 'blockedDomains', 'enabledDomains', 'totalFocusSeconds', 'sessionStartTime', 'sessionDurationMinutes', 'sessionEndTime'],
         (result) => {
+          const blockedDomains = (result.blockedDomains as string[]) ?? DEFAULT_DOMAINS;
           setState({
             isLocked: (result.isLocked as boolean) ?? false,
-            blockedDomains: (result.blockedDomains as string[]) ?? DEFAULT_DOMAINS,
+            blockedDomains: blockedDomains,
+            enabledDomains: (result.enabledDomains as string[]) ?? ['twitter.com', 'reddit.com'],
             totalFocusSeconds: (result.totalFocusSeconds as number) ?? 0,
             sessionStartTime: (result.sessionStartTime as number | null) ?? null,
             sessionDurationMinutes: (result.sessionDurationMinutes as number) ?? DEFAULT_DURATION_MINUTES,
@@ -75,6 +79,7 @@ export function useFocusState() {
         const parsed = JSON.parse(saved);
         setState({
           ...parsed,
+          enabledDomains: parsed.enabledDomains ?? ['twitter.com', 'reddit.com'],
           sessionDurationMinutes: parsed.sessionDurationMinutes ?? DEFAULT_DURATION_MINUTES,
           sessionEndTime: parsed.sessionEndTime ?? null,
         });
@@ -107,6 +112,7 @@ export function useFocusState() {
           const newState: FocusState = {
             isLocked: false,
             blockedDomains: state.blockedDomains,
+            enabledDomains: state.enabledDomains,
             totalFocusSeconds: state.totalFocusSeconds + sessionDuration,
             sessionStartTime: null,
             sessionDurationMinutes: state.sessionDurationMinutes,
@@ -162,13 +168,23 @@ export function useFocusState() {
     const cleaned = domain.toLowerCase().replace(/^(https?:\/\/)?(www\.)?/, '').replace(/\/.*$/, '');
     if (cleaned && !state.blockedDomains.includes(cleaned)) {
       const newDomains = [...state.blockedDomains, cleaned];
-      saveState({ ...state, blockedDomains: newDomains });
+      // New domains are enabled by default
+      const newEnabledDomains = [...state.enabledDomains, cleaned];
+      saveState({ ...state, blockedDomains: newDomains, enabledDomains: newEnabledDomains });
     }
   }, [state, saveState]);
 
   const removeDomain = useCallback((domain: string) => {
     const newDomains = state.blockedDomains.filter(d => d !== domain);
-    saveState({ ...state, blockedDomains: newDomains });
+    const newEnabledDomains = state.enabledDomains.filter(d => d !== domain);
+    saveState({ ...state, blockedDomains: newDomains, enabledDomains: newEnabledDomains });
+  }, [state, saveState]);
+
+  const toggleDomain = useCallback((domain: string) => {
+    const newEnabledDomains = state.enabledDomains.includes(domain)
+      ? state.enabledDomains.filter(d => d !== domain)
+      : [...state.enabledDomains, domain];
+    saveState({ ...state, enabledDomains: newEnabledDomains });
   }, [state, saveState]);
 
   const setSessionDuration = useCallback((minutes: number) => {
@@ -187,11 +203,16 @@ export function useFocusState() {
     };
     saveState(newState);
 
+    // Only block domains that are enabled (checked)
+    const domainsToBlock = state.blockedDomains.filter(domain => 
+      state.enabledDomains.includes(domain)
+    );
+
     const chromeAPI = getChromeStorage();
     if (chromeAPI?.runtime?.sendMessage) {
       chromeAPI.runtime.sendMessage({
         type: 'UPDATE_BLOCKLIST',
-        domains: state.blockedDomains,
+        domains: domainsToBlock,
       });
     }
 
@@ -233,6 +254,7 @@ export function useFocusState() {
     remainingSeconds,
     addDomain,
     removeDomain,
+    toggleDomain,
     setSessionDuration,
     lockIn,
     unlock,

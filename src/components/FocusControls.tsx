@@ -10,9 +10,11 @@ interface FocusControlsProps {
   currentSessionSeconds: number;
   remainingSeconds: number;
   blockedDomains: string[];
+  enabledDomains: string[];
   sessionDurationMinutes: number;
   onAddDomain: (domain: string) => void;
   onRemoveDomain: (domain: string) => void;
+  onToggleDomain: (domain: string) => void;
   onLockIn: () => void;
   onStopSession: () => void;
   onSetDuration: (minutes: number) => void;
@@ -43,9 +45,11 @@ export function FocusControls({
   currentSessionSeconds,
   remainingSeconds,
   blockedDomains,
+  enabledDomains,
   sessionDurationMinutes,
   onAddDomain,
   onRemoveDomain,
+  onToggleDomain,
   onLockIn,
   onStopSession,
   onSetDuration,
@@ -119,8 +123,10 @@ export function FocusControls({
       {/* Blocklist */}
       <Blocklist
         domains={blockedDomains}
+        enabledDomains={enabledDomains}
         onAddDomain={onAddDomain}
         onRemoveDomain={onRemoveDomain}
+        onToggleDomain={onToggleDomain}
         isLocked={isLocked}
       />
 
