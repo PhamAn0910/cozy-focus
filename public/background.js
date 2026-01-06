@@ -104,9 +104,30 @@ chrome.runtime.onInstalled.addListener(() => {
     blockedDomains: ['twitter.com', 'reddit.com', 'youtube.com'],
     totalFocusSeconds: 0
   });
+  // Default: don't replace new tab
+  chrome.storage.sync.set({ replaceNewTab: false });
 });
 
-// Open new tab when clicking the extension icon
+// Open extension page when clicking the extension icon
 chrome.action.onClicked.addListener(() => {
-  chrome.tabs.create({ url: 'chrome://newtab' });
+  chrome.tabs.create({ url: chrome.runtime.getURL('index.html') });
 });
+
+// Listen for new tab setting changes
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === 'UPDATE_NEW_TAB_SETTING') {
+    chrome.storage.sync.set({ replaceNewTab: message.replaceNewTab });
+    sendResponse({ success: true });
+  }
+  return true;
+});
+
+// Check if we should redirect new tabs to the extension
+chrome.tabs.onCreated.addListener((tab) => {
+  chrome.storage.sync.get(['replaceNewTab'], (result) => {
+    if (result.replaceNewTab && (tab.pendingUrl === 'chrome://newtab/' || tab.url === 'chrome://newtab/')) {
+      chrome.tabs.update(tab.id, { url: chrome.runtime.getURL('index.html') });
+    }
+  });
+});
+

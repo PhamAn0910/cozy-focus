@@ -7,12 +7,10 @@
     "storage",
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
-    "alarms"
+    "alarms",
+    "tabs"
   ],
   "host_permissions": ["<all_urls>"],
-  "chrome_url_overrides": {
-    "newtab": "index.html"
-  },
   "background": {
     "service_worker": "background.js",
     "type": "module"

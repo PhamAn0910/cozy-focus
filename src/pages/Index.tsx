@@ -4,6 +4,7 @@ import { useFocusState } from '@/hooks/useFocusState';
 import { FocusControls } from '@/components/FocusControls';
 import { AudioPlayer } from '@/components/AudioPlayer';
 import { StopChallengeModal } from '@/components/StopChallengeModal';
+import { NewTabSetting } from '@/components/NewTabSetting';
 import studyingGirl from '@/assets/little-studying-girl.png';
 import windowVideo from '@/assets/animated-window.mp4';
 import logoWindowSeat from '@/assets/logo-window-seat.png';
@@ -93,6 +94,11 @@ const Index = () => {
 
       {/* Layer 2: UI Overlays */}
       
+      {/* NewTabSetting - Top right corner */}
+      <div className="absolute right-6 md:right-8 top-6 md:top-8 z-20">
+        <NewTabSetting />
+      </div>
+
       {/* FocusControls - Left side, with consistent top margin */}
       <div className="absolute left-6 md:left-8 top-6 md:top-8 z-20">
         <FocusControls
