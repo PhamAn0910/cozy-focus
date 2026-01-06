@@ -62,7 +62,7 @@ export function NewTabSetting() {
       transition={{ delay: 0.4, duration: 0.5 }}
       className="flex items-center gap-3"
     >
-      <span className="text-sm font-medium text-muted-foreground italic">
+      <span className="text-sm font-medium text-muted-foreground">
         {replaceNewTab ? 'New Tab Replaced' : 'Replace New Tab'}
       </span>
       <Switch
