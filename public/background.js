@@ -1,4 +1,4 @@
-// CozyFocus Background Service Worker
+// Window Seat Background Service Worker
 // Handles website blocking using declarativeNetRequest
 
 const RULE_ID_START = 1;

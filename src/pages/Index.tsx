@@ -4,9 +4,9 @@ import { useFocusState } from '@/hooks/useFocusState';
 import { FocusControls } from '@/components/FocusControls';
 import { AudioPlayer } from '@/components/AudioPlayer';
 import { StopChallengeModal } from '@/components/StopChallengeModal';
-import { Logo } from '@/components/Logo';
 import studyingGirl from '@/assets/little-studying-girl.png';
 import windowVideo from '@/assets/animated-window.mp4';
+import logoWindowSeat from '@/assets/logo-window-seat.png';
 
 const Index = () => {
   const {
@@ -77,6 +77,20 @@ const Index = () => {
         />
       </motion.div>
 
+      {/* Layer 1: Window Seat logo (near the girl and window) */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="absolute top-[29%] left-[46%] -translate-x-1/2 z-10"
+      >
+        <img
+          src={logoWindowSeat}
+          alt="Window Seat"
+          className="w-[110px] md:w-[140px] lg:w-[170px] h-auto object-contain"
+        />
+      </motion.div>
+
       {/* Layer 2: UI Overlays */}
       
       {/* FocusControls - Left side, with consistent top margin */}
@@ -95,11 +109,6 @@ const Index = () => {
           onStopSession={handleStopSession}
           onSetDuration={setSessionDuration}
         />
-      </div>
-
-      {/* Logo - Top right with consistent margin */}
-      <div className="absolute top-6 right-6 md:top-8 md:right-8 z-20">
-        <Logo />
       </div>
 
       {/* AudioPlayer - Bottom right with consistent margin */}
