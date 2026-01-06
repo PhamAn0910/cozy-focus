@@ -112,7 +112,10 @@ const Index = () => {
       </div>
 
       {/* AudioPlayer - Bottom right with consistent margin */}
-      <div className="absolute bottom-6 right-6 md:bottom-8 md:right-8 z-20">
+      <div className="absolute bottom-6 right-6 md:bottom-8 md:right-8 z-20 flex flex-col items-end gap-2">
+        <span className="text-sm italic text-muted-foreground font-medium">
+          Listen before you lock in.
+        </span>
         <AudioPlayer />
       </div>
 
