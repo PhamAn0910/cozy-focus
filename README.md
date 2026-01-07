@@ -1,6 +1,6 @@
 # Window Seat - Cozy Study Dashboard Chrome Extension
 
-Your digital window seat for deep work. A cozy Chrome Extension that helps you stay focused by blocking distracting websites, tracking focus hours, and offering 40Hz gamma focus audio.
+Your digital window seat for deep work. A cozy Chrome Extension that helps you stay focused by blocking distracting websites and offering 40Hz gamma focus audio.
 
 ![Window Seat Dashboard](src/assets/study-girl.png)
 
@@ -86,7 +86,7 @@ Add these icon sizes to `public/icons/`:
 
 ## Privacy
 
-CozyFocus stores all data locally on your device. No browsing history or personal information is sent to external servers. See [privacy-policy.md](./privacy-policy.md) for details.
+Window Seat stores all data locally on your device. No browsing history or personal information is sent to external servers. See [privacy-policy.md](./privacy-policy.md) for details.
 
 ## License
 
