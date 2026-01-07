@@ -13,7 +13,7 @@ Window Seat is a Chrome extension designed to help users stay focused by blockin
 ### What We Store Locally
 
 - Your list of blocked websites
-- Focus session duration and statistics
+- Focus session state (active/inactive, start time, duration)
 - User preferences (audio settings, new tab replacement preference)
 
 All of this data is stored using Chrome's storage API (`chrome.storage.sync` and `chrome.storage.local`) and never leaves your device.
@@ -21,7 +21,7 @@ All of this data is stored using Chrome's storage API (`chrome.storage.sync` and
 ## Permissions Explained
 
 ### `storage`
-Used to save your blocked website list, focus statistics, and user preferences locally on your device.
+Used to save your blocked website list, focus session state, and user preferences locally on your device.
 
 ### `declarativeNetRequest` & `declarativeNetRequestWithHostAccess`
 Used to block access to websites on your blocklist. This is done entirely locally and no browsing data is transmitted anywhere.

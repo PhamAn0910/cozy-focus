@@ -101,7 +101,7 @@ async function clearBlockingRules() {
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.set({
     isLocked: false,
-    blockedDomains: ['twitter.com', 'reddit.com', 'youtube.com'],
+    blockedDomains: ['facebook.com', 'reddit.com', 'youtube.com'],
     totalFocusSeconds: 0
   });
   // Default: don't replace new tab

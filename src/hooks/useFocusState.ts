@@ -42,7 +42,7 @@ export function useFocusState() {
   const [state, setState] = useState<FocusState>({
     isLocked: false,
     blockedDomains: DEFAULT_DOMAINS,
-    enabledDomains: ['twitter.com', 'reddit.com'], // Only first two enabled by default
+    enabledDomains: ['facebook.com', 'reddit.com'], // Only first two enabled by default
     totalFocusSeconds: 0,
     sessionStartTime: null,
     sessionDurationMinutes: DEFAULT_DURATION_MINUTES,
@@ -64,7 +64,7 @@ export function useFocusState() {
           setState({
             isLocked: (result.isLocked as boolean) ?? false,
             blockedDomains: blockedDomains,
-            enabledDomains: (result.enabledDomains as string[]) ?? ['twitter.com', 'reddit.com'],
+            enabledDomains: (result.enabledDomains as string[]) ?? ['facebook.com', 'reddit.com'],
             totalFocusSeconds: (result.totalFocusSeconds as number) ?? 0,
             sessionStartTime: (result.sessionStartTime as number | null) ?? null,
             sessionDurationMinutes: (result.sessionDurationMinutes as number) ?? DEFAULT_DURATION_MINUTES,
@@ -79,7 +79,7 @@ export function useFocusState() {
         const parsed = JSON.parse(saved);
         setState({
           ...parsed,
-          enabledDomains: parsed.enabledDomains ?? ['twitter.com', 'reddit.com'],
+          enabledDomains: parsed.enabledDomains ?? ['facebook.com', 'reddit.com'],
           sessionDurationMinutes: parsed.sessionDurationMinutes ?? DEFAULT_DURATION_MINUTES,
           sessionEndTime: parsed.sessionEndTime ?? null,
         });

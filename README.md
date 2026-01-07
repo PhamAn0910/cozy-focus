@@ -1,17 +1,17 @@
-# CozyFocus - Lo-Fi Study Dashboard Chrome Extension
+# Window Seat - Cozy Study Dashboard Chrome Extension
 
-A cozy Chrome Extension that replaces your New Tab page with a beautiful lo-fi study dashboard. It helps you stay focused by blocking distracting websites and tracking your focus hours.
+Your digital window seat for deep work. A cozy Chrome Extension that helps you stay focused by blocking distracting websites, tracking focus hours, and offering 40Hz gamma focus audio.
 
-![CozyFocus Dashboard](src/assets/study-girl.png)
+![Window Seat Dashboard](src/assets/study-girl.png)
 
 ## Features
 
-- 🎨 **Beautiful Lo-Fi Aesthetic** - Warm, cozy design with glassmorphism panels
-- ⏱️ **Focus Timer** - Tracks your focus session in real-time
-- 🚫 **Website Blocker** - Block distracting sites with declarativeNetRequest
-- 🔐 **Shame Phrase Unlock** - Forces you to type a phrase to quit early
-- 🎵 **Ambient Audio Player** - Rain sounds to help you concentrate
-- 📊 **Focus Statistics** - Track total focus hours over time
+- 🪟 **Cozy Study Dashboard** - Warm, calming design with animated window view
+- ⏱️ **Focus Timer** - Tracks your focus session in real-time with countdown
+- 🚫 **Website Blocker** - Block distracting sites during focus sessions
+- 🔐 **Shame Phrase Unlock** - Type a phrase to quit early (prevents impulsive exits)
+- 🎵 **40Hz Focus Audio** - Gamma frequency audio to enhance concentration
+- 🔄 **Optional New Tab Replacement** - Replace your new tab with the dashboard
 
 ## Tech Stack
 
@@ -78,8 +78,10 @@ Add these icon sizes to `public/icons/`:
 
 ## Permissions Explained
 
-- `storage` - Save blocklist and focus statistics locally
+- `storage` - Save blocklist, session state, and preferences locally
 - `declarativeNetRequest` - Block websites using Chrome's efficient blocking API
+- `alarms` - Manage focus session timers
+- `tabs` - Optional new tab replacement feature
 - `<all_urls>` - Required to intercept and redirect blocked sites
 
 ## Privacy
