@@ -1,4 +1,4 @@
-# Window Seat - Cozy Study Dashboard Chrome Extension
+# Window Seat - Website Blocker & Focus Dashboard Chrome Extension
 
 Your digital window seat for deep work. A cozy Chrome Extension that helps you stay focused by blocking distracting websites and offering 40Hz gamma focus audio.
 

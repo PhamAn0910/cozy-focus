@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Window Seat - Cozy Study Dashboard",
-  "version": "1.0.0",
+  "name": "Window Seat - Website Blocker & Focus Dashboard",
+  "version": "1.0.1",
   "description": "Your digital window seat for deep work. Block distractions & lock in with 40Hz focus audio.",
   "permissions": [
     "storage",
